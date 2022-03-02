@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_margin="12dp"
+    card_view:cardBackgroundColor="#227C9D"
+    card_view:cardCornerRadius="20dp"
+    card_view:cardElevation="6dp"
+     card_view:contentPadding="4dp">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+       <TableRow>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/numero"
+               android:textSize="30dp"
+               android:textStyle="bold"
+               />
+        <ImageView
+           android:layout_width="100dp"
+           android:layout_height="100dp"
+           android:id="@+id/item_image" android:src="@drawable/tareacompletada"
+           android:layout_marginLeft="1dp"
+           />
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:gravity="start"
+            android:scrollbarSize="@dimen/activity_horizontal_margin"
+            android:background="#8AC6E1"
+            android:id="@+id/text"/>
+       </TableRow>
+    </TableLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
