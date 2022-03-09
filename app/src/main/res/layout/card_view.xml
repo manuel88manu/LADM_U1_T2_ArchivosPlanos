@@ -30,6 +30,7 @@
            android:id="@+id/item_image" android:src="@drawable/tareacompletada"
            android:layout_marginLeft="1dp"
            />
+        <LinearLayout android:orientation="vertical">
         <TextView
             android:layout_width="250dp"
             android:layout_height="wrap_content"
@@ -37,7 +38,25 @@
             android:gravity="start"
             android:scrollbarSize="@dimen/activity_horizontal_margin"
             android:background="#8AC6E1"
-            android:id="@+id/text"/>
+            android:id="@+id/textmateria"/>
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:gravity="start"
+                android:scrollbarSize="@dimen/activity_horizontal_margin"
+                android:background="#B6A4D6"
+                android:id="@+id/textHora"/>
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:gravity="start"
+                android:scrollbarSize="@dimen/activity_horizontal_margin"
+                android:background="#E89980"
+                android:id="@+id/textTarea"/>
+
+        </LinearLayout>
        </TableRow>
     </TableLayout>
 

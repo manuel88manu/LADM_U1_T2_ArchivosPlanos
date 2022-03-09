@@ -9,30 +9,41 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class CustomAdapter: RecyclerView.Adapter<CustomAdapter.ViewHolder>(){
-    val tarea= arrayListOf("Materia: LYA Descripcion: Hacer esposicion de matematicas","Materia: IA Descripcion:HAcer ejercicios")
+    companion object{
+        var listaCapas= arrayListOf<String>("Materia: ,Hora de Entrega: ,Tarea: ")
+    }
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
       val v= LayoutInflater.from(viewGroup.context).inflate(R.layout.card_view,viewGroup,false)
         return ViewHolder(v)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        viewHolder.itemTarea.text=tarea[i]
+        val arr= listaCapas.get(i).split(",")
+        viewHolder.itemMateria.text=arr[0]
+        viewHolder.itemHora.text=arr[1]
+        viewHolder.itemTarea.text=arr[2]
         viewHolder.itemNumero.text=(i+1).toString()
     }
 
     override fun getItemCount(): Int {
-        return tarea.size
+        return listaCapas.size
     }
 
 inner class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
     var itemImage: ImageView
+    var itemMateria: TextView
+    var itemHora: TextView
     var itemTarea: TextView
     var itemNumero:TextView
     init{
         itemImage=itemView.findViewById(R.id.item_image)
-        itemTarea=itemView.findViewById(R.id.text)
+        itemMateria=itemView.findViewById(R.id.textmateria)
+        itemHora=itemView.findViewById(R.id.textHora)
+        itemTarea=itemView.findViewById(R.id.textTarea)
         itemNumero=itemView.findViewById(R.id.numero)
     }
 
 }
+
 }

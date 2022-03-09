@@ -2,6 +2,7 @@ package mx.tecnm.tepic.ladm_u1_t2_archivosplanos.ui.slideshow
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import mx.tecnm.tepic.ladm_u1_t2_archivosplanos.CustomAdapter
+import mx.tecnm.tepic.ladm_u1_t2_archivosplanos.CustomAdapter.Companion.listaCapas
 import mx.tecnm.tepic.ladm_u1_t2_archivosplanos.databinding.FragmentSlideshowBinding
+import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
@@ -20,7 +24,7 @@ class SlideshowFragment : Fragment() {
 
     private var _binding: FragmentSlideshowBinding? = null
     public var textInser=""
-    private val archivo= OutputStreamWriter(requireActivity().openFileOutput("archivo.txt",0))
+    public val arreglo= arrayListOf<String>()
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -36,56 +40,49 @@ class SlideshowFragment : Fragment() {
         _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.insertar.setOnClickListener {
-
-            guardar()
+            textInser = "Materia: " + binding.editMa.text.toString() + "," + "Hora de entrega:" + binding.editHo.text.toString() + ", Tarea: " + binding.editDes.text.toString()
+            guardar(textInser,requireContext())
             mostrar()
-
+        }
+        binding.Borrar.setOnClickListener {
+            borrar("",requireContext())
+            mostrar()
+            AlertDialog.Builder(requireContext()).setMessage("SE ELIMINARON TODAS LAS TAREAS").show()
         }
         return root
 
     }
 
-    private fun guardar() {
-       try {
-           val arreglo= arrayListOf<String>()
-           val archi=InputStreamReader(requireActivity().openFileInput("archivo.txt"))
-           var lista=archi.readLines()
-               textInser = "Materia: " + binding.editMa.text.toString() + "\n" + "Hora de entrega: \n" + binding.editHo.text.toString() + "\n Tarea: " + binding.editDes.text.toString()
-           Toast.makeText(requireContext(),"Es tamaño de la lista es: ${lista.size}",Toast.LENGTH_LONG).show()
-           if(lista.size==0) {
-               arreglo.add(textInser)
-               archivo.write(textInser)
-               archivo.flush()
-               archivo.close()
-               Toast.makeText(requireContext(),"Esta Vacio",Toast.LENGTH_LONG).show()
-           }
-           else{
-               Toast.makeText(requireContext(),"Ya esta creado",Toast.LENGTH_LONG).show()
-               val archi=InputStreamReader(requireActivity().openFileInput("archivo.txt"))
-               var texto=archi.read().toString()
-               if(!texto.equals("-1")) {
-                   texto = texto+textInser
-                   archivo.write(texto)
-                   archivo.flush()
-                   archivo.close()
-                   Toast.makeText(requireContext(),"No es -1",Toast.LENGTH_LONG).show()
-               }else{
-                   texto = texto + "\n" + textInser
-                   archivo.write(texto)
-                   archivo.flush()
-                   archivo.close()
+    fun borrar(data:String,context: Context){
+        try{
+            val outputStreamWriter=OutputStreamWriter(context.openFileOutput("datos.txt",0))
+            outputStreamWriter.write("")
+            outputStreamWriter.flush()
+            outputStreamWriter.close()
+        }catch (e:IOException){
 
-               }
-           }
-       }catch (e:Exception){
+        }
 
-       }
+    }
+    //===========================================================================================
+    fun guardar(data:String,context: Context){
+     try{
+         val outputStreamWriter=OutputStreamWriter(context.openFileOutput("datos.txt",Context.MODE_APPEND))
+         outputStreamWriter.write(data+"\n")
+         outputStreamWriter.flush()
+         outputStreamWriter.close()
+         AlertDialog.Builder(requireContext()).setMessage("SE AGREGO NUEVA TAREA").show()
+
+     }catch (e:IOException){
+
+     }
+
     }
     private fun mostrar() {
         try {
-            val archi=InputStreamReader(requireActivity().openFileInput("archivo.txt"))
-            var lista=archi.readLines()
-            AlertDialog.Builder(requireContext()).setMessage(lista.toString()).show()
+            val archi=InputStreamReader(requireActivity().openFileInput("datos.txt"))
+            val lista=archi.readLines()
+            listaCapas= lista as ArrayList<String>
         }catch (e:Exception){
 
         }
